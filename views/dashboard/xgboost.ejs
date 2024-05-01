@@ -1,0 +1,29 @@
+<!-- views/dashboard/XGBoostPredictions.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XGBoost Predictions</title>
+  </head>
+  <body>
+    <h2>XGBoost Predictions for Product <%= productId %></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Week</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% predictions.forEach(prediction => { %>
+        <tr>
+          <td><%= prediction.week %></td>
+          <td><%= prediction.sales %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>

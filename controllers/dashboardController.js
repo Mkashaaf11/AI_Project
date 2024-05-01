@@ -16,19 +16,29 @@ exports.getYearlySales = async (req, res) => {
   }
 };
 
+exports.renderProductIdForm = async (req, res) => {
+  res.render("dashboard/ProductIdInput", { title: "insert product Id" });
+};
 exports.getProductSales = async (req, res) => {
   try {
-    const { productId } = req.query;
+    const { productID } = req.body;
+
+    // Create an object containing only the features
+    const productIDNumber = parseInt(productID);
+    const features = {
+      ProductID: productIDNumber,
+    };
 
     const flaskResponse = await axios.post(
       "http://localhost:5000/predict_xgboost",
       {
-        productId: productId,
+        features: features,
       }
     );
 
     const predictions = flaskResponse.data;
-    res.render("dashboard/xgboost", { predictions });
+    console.log(predictions);
+    res.render("dashboard/xgboost", { predictions, productId: productID });
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching predictions.");

@@ -4,14 +4,14 @@ import pandas as pd
 
 app = Flask(__name__)
 
+data_weekly = pd.read_csv("E:/data_weekly.csv")
 # Load the Prophet model
 with open('prophet_model.pkl', 'rb') as f:
     prophet_model = pickle.load(f)
 
 # Load the XGBoost model
-with open('xgboost_model.pkl', 'rb') as f:
+with open('ProductForecast.pkl', 'rb') as f:
     xgboost_model = pickle.load(f)
-
 @app.route('/predict_prophet', methods=['POST'])
 def predict_prophet():
     data = request.get_json(force=True)
@@ -21,21 +21,30 @@ def predict_prophet():
 
 @app.route('/predict_xgboost', methods=['POST'])
 def predict_xgboost():
-    data = request.get_json(force=True)
-    # Example: Extract product ID and week numbers from request data
-    product_id = data.get('product_id')
-    num_weeks_in_month = 4
-    week_numbers = list(range(1, num_weeks_in_month + 1))
-    # Create DataFrame with product features
-    product_features = pd.DataFrame({
-        'ProductID': [product_id] * num_weeks_in_month,
-        'WeekNumber': week_numbers
-    })
+    try:
+        requestData = request.get_json()
+       
+        productID = requestData['features']['ProductID']
+        print(productID)
+        numWeeksInMonth = list(range(1, 5))
+    
+    # Filter data for the specified productId
+        productData = data_weekly[data_weekly['ProductID'] == productID]
+    
+    # Extract features for the specified product
+        productFeatures = productData.drop(['Date', 'Sales'], axis=1)
+    
     # Predict sales for the new month
-    predicted_sales = xgboost_model.predict(product_features)
-    # Format predictions
-    predictions = [{'week': week, 'sales': sales} for week, sales in zip(week_numbers, predicted_sales)]
-    return jsonify(predictions)
+        predicted_sales = xgboost_model.predict(productFeatures)
+        
+        predicted_sales = [float(sale) for sale in predicted_sales]
+       
+        # Format predictions
+        predictions = [{'week': week, 'sales': sales} for week, sales in zip(numWeeksInMonth, predicted_sales)]
+
+        return jsonify(predictions)
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
