@@ -1,0 +1,13 @@
+/* style.css */
+
+.footer {
+    background-color: #333; /* Same as the navbar */
+    color: #fff; /* White text */
+    padding: 20px 0; /* Add some padding for spacing */
+    text-align: center; /* Center-align the text */
+  }
+  
+  .footer-text {
+    margin: 0; /* Remove default margin */
+  }
+  

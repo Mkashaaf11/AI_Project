@@ -1,7 +1,29 @@
-<!-- views/products/index.ejs -->
-<h2>Products</h2>
-<ul>
-  <% products.forEach(product => { %>
-  <li><%= product.name %></li>
-  <% }); %>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/product.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="slider-container">
+      <div class="slider">
+        <% products.forEach(product => { %>
+        <div class="card">
+          <h3><%= product.name %></h3>
+          <h3><%= product.price %></h3>
+          <!-- Add other product details here -->
+          <div class="btn-container">
+            <button class="update-btn">Update</button>
+            <button class="delete-btn">Delete</button>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+      <button class="prev" onclick="prevSlide()">❮</button>
+      <button class="next" onclick="nextSlide()">❯</button>
+    </div>
+    <script src="/js/product.js"></script>
+  </body>
+</html>

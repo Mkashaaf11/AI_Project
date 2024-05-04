@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Show Sales Record</title>
+  </head>
+  <body>
+    <h1>Sales Record Details</h1>
+    <div>
+      <p><strong>Date:</strong> <%= record.date %></p>
+      <p><strong>Product ID:</strong> <%= record.productID %></p>
+      <p><strong>Sales:</strong> <%= record.sales %></p>
+      <p><strong>Price:</strong> <%= record.price %></p>
+      <p><strong>Competitor Price:</strong> <%= record.competitorPrice %></p>
+    </div>
+    <div>
+      <a href="/dashboard/sales/edit/<%= record._id %>">Edit</a>
+      <form action="/dashboard/sales/delete/<%= record._id %>" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </body>
+</html>

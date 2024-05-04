@@ -1,0 +1,106 @@
+/* public/css/product.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin: 0;
+}
+
+.slider-container {
+  width: 80%;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  flex-wrap: wrap; /* Display cards vertically */
+  align-items: flex-start; 
+  justify-content: space-between;
+  transition: transform 0.5s ease;
+}
+
+.card {
+  flex: 0 0 30%;
+  margin-bottom: 20px; /* Adjust vertical spacing */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  color: #333;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.card h3 svg {
+  margin-right: 10px;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.update-btn,
+.delete-btn {
+  background-color: hsl(240, 2%, 17%);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.update-btn svg,
+.delete-btn svg {
+  margin-right: 5px;
+}
+
+.update-btn:hover,
+.delete-btn:hover {
+  background-color: #0056b3;
+}
