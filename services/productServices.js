@@ -10,7 +10,6 @@ exports.getProduct = async (productID) => {
 
 exports.createProduct = async (newProduct) => {
   const product = new Product(newProduct);
-  console.log("hello");
   return await product.save();
 };
 
@@ -20,4 +19,14 @@ exports.updateProduct = async (productId, product) => {
 
 exports.deleteProduct = async (productId) => {
   return await Product.findByIdAndDelete(productId);
+};
+
+exports.getProductCount = async () => {
+  const productCount = await Product.countDocuments();
+  return productCount;
+};
+
+exports.getRecentProduct = async () => {
+  const recentProduct = await Product.findOne().sort({ _id: -1 }).limit(1);
+  return recentProduct;
 };

@@ -8,15 +8,25 @@
   <body>
     <h1>Sales Record Details</h1>
     <div>
-      <p><strong>Date:</strong> <%= record.date %></p>
-      <p><strong>Product ID:</strong> <%= record.productID %></p>
+      <p>
+        <strong>Date:</strong> <%= new Date(record.date).toLocaleDateString() %>
+      </p>
+      <p>
+        <strong>Product ID:</strong>
+        <% const product = products.find(prod => prod._id.toString() ===
+        record.productID.toString()); %> <%= product ? product.customID : 'N/A'
+        %>
+      </p>
       <p><strong>Sales:</strong> <%= record.sales %></p>
       <p><strong>Price:</strong> <%= record.price %></p>
       <p><strong>Competitor Price:</strong> <%= record.competitorPrice %></p>
     </div>
     <div>
       <a href="/dashboard/sales/edit/<%= record._id %>">Edit</a>
-      <form action="/dashboard/sales/delete/<%= record._id %>" method="POST">
+      <form
+        action="/dashboard/sales/delete/<%= record._id %>?_method=DELETE"
+        method="POST"
+      >
         <button type="submit">Delete</button>
       </form>
     </div>

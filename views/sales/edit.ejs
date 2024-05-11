@@ -7,18 +7,25 @@
   </head>
   <body>
     <h1>Edit Sales Record</h1>
-    <form action="/dashboard/sales/edit/<%= record._id %>" method="POST">
+    <form
+      action="/dashboard/sales/edit/<%= record._id %>?_method=PUT"
+      method="POST"
+    >
       <div>
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" value="<%= record.date %>" />
       </div>
       <div>
         <label for="productID">Product ID:</label>
+        <!-- Display custom product ID -->
+        <% const product = products.find(prod => prod._id.toString() ===
+        record.productID.toString()); %>
         <input
           type="text"
           id="productID"
           name="productID"
-          value="<%= record.productID %>"
+          value="<%= product ? product.customID : 'N/A' %>"
+          disabled
         />
       </div>
       <div>

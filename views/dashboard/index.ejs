@@ -12,10 +12,22 @@
       <section class="section">
         <h2>Total Sales</h2>
         <div class="sales-info">
-          <div class="today">Today: $1000</div>
-          <div class="this-month">This Month: $5000</div>
+          <div class="today">
+            Today :<% if (todaySales.length>0) { %> <%=
+            todaySales[0].SalesQuantity %> <% } else{ %> <% 0 }%> Revenue :<% if
+            (todaySales.length>0) { %> <%= todaySales[0].totalAmount %> <% }
+            else{ %> <% 0 }%>
+          </div>
+          <div class="this-month">
+            This Month:<% if (monthlySales.length > 0){ %> <%=
+            monthlySales[0].SalesQuantity %> <% } else { %> <% 0} %> Revenue :<%
+            if (monthlySales.length>0) { %> <%= monthlySales[0].totalAmount %>
+            <% } else{ %> <% 0 }%>
+          </div>
           <button class="next-month-btn">Expected Sales Next Month</button>
-          <button class="next-month-btn">Add Sale Record</button>
+          <a href="/dashboard/sales/new"
+            ><button class="next-month-btn">Add Sale Record</button></a
+          >
         </div>
       </section>
 
@@ -23,9 +35,27 @@
       <section class="section">
         <h2>Product Information</h2>
         <div class="product-info">
-          <div class="product-count">Number of Products: 100</div>
-          <div class="recent-product">Recent Product: Product Name</div>
-          <div class="recent-sale">Recent Sale: Sale Details</div>
+          <div class="product-count">
+            Number of Products: <%= productCount %>
+          </div>
+          <div class="recent-product">
+            Recent Product: <%= recentProduct.name %>
+          </div>
+          <div class="recent-sale">
+            Recent Sale: <% if (recentSale) { %>
+            <ul>
+              <li>Date: <%= recentSale.date.toDateString() %></li>
+              <li>
+                Product Id: <% const product = products.find(prod =>
+                prod._id.toString() === recentSale.productID.toString()); %> <%=
+                product ? product.customID : 'N/A' %>
+              </li>
+              <li>Sales: <%= recentSale.sales %></li>
+              <li>Price: <%= recentSale.price %></li>
+              <li>Competitor Price: <%= recentSale.competitorPrice %></li>
+            </ul>
+            <% } else { %> No recent sale found. <% } %>
+          </div>
         </div>
       </section>
 

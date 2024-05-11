@@ -9,7 +9,6 @@ const salesSchema = mongoose.Schema({
   sales: { type: Number, required: true },
   price: { type: Number, required: true },
   competitorPrice: { type: Number, required: true },
-  customID: { type: Number, required: true },
 });
 
 module.exports = mongoose.model("sales", salesSchema);

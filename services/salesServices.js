@@ -1,8 +1,8 @@
 const Sale = require("../models/sales");
 
 exports.addRecord = async (record) => {
-  const sale = new Sale(record);
-  return await sale.save();
+  const sales = new Sale(record);
+  return await sales.save();
 };
 
 exports.getRecord = async (recordID) => {
@@ -19,4 +19,45 @@ exports.updateRecord = async (recordId, record) => {
 
 exports.deleteRecord = async (recordId) => {
   return await Sale.findByIdAndDelete(recordId);
+};
+
+exports.getTodaySales = async () => {
+  const today = new Date();
+  today.setHours(0);
+
+  const totalSalesToday = await Sale.aggregate([
+    { $match: { date: { $gte: today } } },
+    {
+      $group: {
+        _id: null,
+        SalesQuantity: { $sum: "$sales" },
+        totalAmount: { $sum: { $multiply: ["$sales", "$price"] } },
+      },
+    },
+  ]);
+
+  return totalSalesToday;
+};
+
+exports.getMonthlySales = async () => {
+  const currMonth = new Date();
+  currMonth.setDate(1);
+  currMonth.setHours(0);
+
+  const totalSalesMonthly = await Sale.aggregate([
+    { $match: { date: { $gte: currMonth } } },
+    {
+      $group: {
+        _id: null,
+        SalesQuantity: { $sum: "$sales" },
+        totalAmount: { $sum: { $multiply: ["$sales", "$price"] } },
+      },
+    },
+  ]);
+  return totalSalesMonthly;
+};
+
+exports.getRecentSale = async () => {
+  const recentSale = await Sale.findOne().sort({ _id: -1 });
+  return recentSale;
 };

@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>New Sale</h1>
-    <form action="/sales" method="POST">
+    <form action="/dashboard/sales/new" method="POST">
       <label for="date">Date:</label>
       <input type="date" id="date" name="date" required /><br />
 
@@ -15,7 +15,7 @@
       <select id="productID" name="productID" required>
         <option value="">Select Product ID</option>
         <% products.forEach(product => { %>
-        <option value="<%= product.customID %>"><%= product.customID %></option>
+        <option value="<%= product._id %>"><%= product.customID %></option>
         <% }); %></select
       ><br />
 

@@ -3,13 +3,28 @@ const salesService = require("../services/salesServices");
 const productService = require("../services/productServices");
 
 exports.mainPage = async (req, res) => {
-  res.render("dashboard/index");
+  const todaySales = await salesService.getTodaySales();
+  const monthlySales = await salesService.getMonthlySales();
+  const recentSale = await salesService.getRecentSale();
+  const productCount = await productService.getProductCount();
+  const recentProduct = await productService.getRecentProduct();
+  const products = await productService.getProducts();
+  res.render("dashboard/index", {
+    todaySales,
+    monthlySales,
+    recentSale,
+    productCount,
+    recentProduct,
+    products,
+  });
 };
 
 exports.getRecords = async (req, res) => {
   try {
     const records = await salesService.getRecords();
-    res.render("sales/index", { records });
+    const products = await productService.getProducts();
+
+    res.render("sales/index", { records, products });
   } catch (error) {
     res.status(500).json({ message: "Error getting sales!" });
   }
@@ -19,10 +34,12 @@ exports.getRecord = async (req, res) => {
   const id = req.params.id;
   try {
     const record = await salesService.getRecord(id);
-    if (!product) {
+    const products = await productService.getProducts();
+
+    if (!record) {
       res.status(404).json({ message: "Record not found" });
     }
-    res.render("sales/show", { record });
+    res.render("sales/show", { record, products });
   } catch (error) {
     res.status(500).json({ message: "Error getting record" });
   }
@@ -40,7 +57,7 @@ exports.createSale = async (req, res) => {
   try {
     const createdRecord = await salesService.addRecord(newRecord);
     console.log(createdRecord);
-    res.redirect("/Sales");
+    res.redirect("/dashboard/Sales");
   } catch (error) {
     res.status(500).json({ message: "Error creating record" });
   }
@@ -51,7 +68,9 @@ exports.getEditRecord = async (req, res) => {
 
   try {
     const record = await salesService.getRecord(id);
-    res.render("sales/edit", { product, title: "Edit Record" });
+    const products = await productService.getProducts();
+
+    res.render("sales/edit", { record, products, title: "Edit Record" });
   } catch (error) {
     res.status(500).json({ message: "Error getting Record" });
   }
@@ -66,7 +85,7 @@ exports.updateRecord = async (req, res) => {
     if (!updated) {
       res.status(404).json({ message: "Record not found for updation" });
     }
-    res.redirect("/sales/" + id);
+    res.redirect("/dashboard/sales/" + id);
   } catch (error) {
     res.status(500).json({ message: "Error occured while updation" });
   }
@@ -80,7 +99,7 @@ exports.deleteRecord = async (req, res) => {
       res.status(400).json({ message: "Record not found for deletion" });
     }
 
-    res.status(200).json({ message: " Record deleted sucessfully" });
+    res.redirect("/dashboard/sales");
   } catch (error) {
     res.status(500).json({ message: "Error deleting Record" });
   }
