@@ -32,7 +32,7 @@ exports.createProduct = async (req, res) => {
   try {
     const createdProduct = await productService.createProduct(newProduct);
     console.log(createdProduct);
-    res.redirect("/products");
+    res.redirect("/dashboard/product");
   } catch (error) {
     res.status(500).json({ message: "Error creating product" });
   }
@@ -58,7 +58,7 @@ exports.updateProduct = async (req, res) => {
     if (!updated) {
       res.status(404).json({ message: "product not found for updation" });
     }
-    res.redirect("/products/" + id);
+    res.redirect("dashboard/product/" + id);
   } catch (error) {
     res.status(500).json({ message: "Error occured while updation" });
   }
@@ -72,7 +72,7 @@ exports.deleteProduct = async (req, res) => {
       res.status(400).json({ message: "Prodcut not found for deletion" });
     }
 
-    res.status(200).json({ message: " Product deleted sucessfully" });
+    res.redirect("/dashboard/product");
   } catch (error) {
     res.status(500).json({ message: "Error deleting product" });
   }

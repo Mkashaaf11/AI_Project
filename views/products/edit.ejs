@@ -2,6 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link rel="stylesheet" href="/css/product_edit.css" />
   </head>
   <body>
     <h1>Edit Product</h1>
@@ -26,19 +27,11 @@
 
       <label for="description">Description:</label>
       <textarea id="description" name="description" required>
-<%= product.description %></textarea
+        <%= product.description %>
+      </textarea
       ><br />
 
-      <label for="imageUrl">Image URL:</label>
-      <input
-        type="url"
-        id="imageUrl"
-        name="imageUrl"
-        value="<%= product.imageUrl %>"
-        required
-      /><br />
-
-      <button type="submit">Update Product</button>
+      <button type="submit" class="update-btn">Update Product</button>
     </form>
   </body>
 </html>

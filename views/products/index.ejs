@@ -15,8 +15,15 @@
           <h3><%= product.price %></h3>
           <!-- Add other product details here -->
           <div class="btn-container">
-            <button class="update-btn">Update</button>
-            <button class="delete-btn">Delete</button>
+            <a href="/dashboard/product/edit/<%= product._id %>">
+              <button class="update-btn">Update</button></a
+            >
+            <form
+              action="/dashboard/product/delete/<%= product._id %>?_method=DELETE"
+              method="POST"
+            >
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
           </div>
         </div>
         <% }); %>

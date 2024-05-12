@@ -150,3 +150,22 @@ exports.getProductSales = async (req, res) => {
     res.status(500).send("An error occurred while fetching predictions.");
   }
 };
+
+exports.getRestockPrediction = async (req, res) => {
+  try {
+    const productId = req.params.productId; // Extract the product ID from the request parameters
+
+    // Fetch predictions from Flask API for the specified product ID
+    const flaskResponse = await axios.post(
+      `http://localhost:5000/predict_restock_date/${productId}`, // Use the product ID in the URL
+      {}
+    );
+    const predictions = flaskResponse.data;
+
+    // Render dashboard view with predictions data
+    res.render("dashboard/lstm", { predictions });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching predictions.");
+  }
+};

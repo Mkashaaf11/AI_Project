@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Sales Record</title>
+    <link rel="stylesheet" href="/css/sales_edit.css" />
   </head>
   <body>
-    <h1>Edit Sales Record</h1>
+    <h1>Update Sales Record</h1>
     <form
       action="/dashboard/sales/edit/<%= record._id %>?_method=PUT"
       method="POST"
@@ -55,7 +56,7 @@
           value="<%= record.competitorPrice %>"
         />
       </div>
-      <button type="submit">Save Changes</button>
+      <button type="submit" class="save-btn">Save Changes</button>
     </form>
   </body>
 </html>

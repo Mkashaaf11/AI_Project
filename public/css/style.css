@@ -5,12 +5,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* .navbar {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-}
-*/
 .container {
   max-width: 960px;
   margin: 20px auto;
@@ -26,19 +20,38 @@ body {
 
 .section h2 {
   margin-top: 0;
+  text-align: center;
 }
 
-.sales-info, .product-info, .report-buttons {
+.sales-info,
+.product-info,
+.report-buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
 }
 
-.today, .this-month, .product-count, .recent-product, .recent-sale {
-  flex: 1;
+.today,
+.this-month,
+.product-count,
+.recent-product,
+.recent-sale {
+  flex-basis: 48%;
+  margin-bottom: 10px;
 }
 
-.next-month-btn, .report-btn {
+.today,
+.this-month,
+.product-count,
+.recent-product,
+.recent-sale,
+.add-product,
+.report-buttons {
+  padding: 10px;
+}
+
+.next-month-btn,
+.report-btn {
   background-color: #333;
   color: #fff;
   border: none;
@@ -48,6 +61,17 @@ body {
   transition: background-color 0.3s;
 }
 
-.next-month-btn:hover, .report-btn:hover {
+.next-month-btn:hover,
+.report-btn:hover {
   background-color: #555;
+}
+
+.recent-sale ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.recent-sale ul li {
+  display: inline-block;
+  margin-right: 10px;
 }

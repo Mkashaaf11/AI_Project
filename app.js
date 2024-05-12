@@ -18,7 +18,9 @@ app.set("layout", "layouts/main");
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/products", productRoutes);
+app.get("/", (req, res) => {
+  res.render("index");
+});
 app.use("/dashboard", dashboardRoutes);
 
 app.listen(3000, () => {

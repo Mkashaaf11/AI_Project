@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Show Sales Record</title>
+    <link rel="stylesheet" href="/css/sales_index.css" />
   </head>
   <body>
     <h1>Sales Record Details</h1>
-    <div>
+    <div class="index">
       <p>
         <strong>Date:</strong> <%= new Date(record.date).toLocaleDateString() %>
       </p>
@@ -20,15 +21,17 @@
       <p><strong>Sales:</strong> <%= record.sales %></p>
       <p><strong>Price:</strong> <%= record.price %></p>
       <p><strong>Competitor Price:</strong> <%= record.competitorPrice %></p>
-    </div>
-    <div>
-      <a href="/dashboard/sales/edit/<%= record._id %>">Edit</a>
-      <form
-        action="/dashboard/sales/delete/<%= record._id %>?_method=DELETE"
-        method="POST"
-      >
-        <button type="submit">Delete</button>
-      </form>
+      <div class="btn-container">
+        <a href="/dashboard/sales/edit/<%= record._id %>"
+          ><button class="update-btn">Update</button></a
+        >
+        <form
+          action="/dashboard/sales/delete/<%= record._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
