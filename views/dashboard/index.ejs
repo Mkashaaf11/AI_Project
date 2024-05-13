@@ -24,7 +24,10 @@
             if (monthlySales.length>0) { %> <%= monthlySales[0].totalAmount %>
             <% } else{ %> <% 0 }%>
           </div>
-          <button class="next-month-btn">Expected Sales Next Month</button>
+          <a href="/dashboard/yearSales">
+            <button class="next-month-btn">Expected Sales</button></a
+          >
+
           <a href="/dashboard/sales/new"
             ><button class="next-month-btn">Add Sale Record</button></a
           >
@@ -68,8 +71,13 @@
       <section class="section">
         <h2>Reports</h2>
         <div class="report-buttons">
-          <button class="report-btn">Prediction 1</button>
-          <button class="report-btn">Prediction 2</button>
+          <a href="/dashboard/yearSales"
+            ><button class="report-btn">Prediction 1</button></a
+          >
+          <a href="/dashboard/productSales"
+            ><button class="report-btn">Prediction 2</button></a
+          >
+
           <button class="report-btn">Prediction 3</button>
         </div>
       </section>

@@ -1,10 +1,9 @@
-<!-- dashboard.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/prophet.css" />
     <title>Predictions</title>
   </head>
 
@@ -20,15 +19,94 @@
         </tr>
       </thead>
       <tbody>
-        <% predictions.forEach(prediction => { %>
+        <% predictions.forEach((prediction) => { %>
         <tr>
-          <td><%= prediction.ds %></td>
-          <td><%= prediction.yhat %></td>
-          <td><%= prediction.yhat_lower %></td>
-          <td><%= prediction.yhat_upper %></td>
+          <td><%= new Date(prediction.ds).toLocaleDateString() %></td>
+          <td><%= prediction.yhat.toFixed(2) %></td>
+          <td><%= prediction.yhat_lower.toFixed(2) %></td>
+          <td><%= prediction.yhat_upper.toFixed(2) %></td>
         </tr>
         <% }); %>
       </tbody>
     </table>
+    <div class="graph-container">
+      <canvas id="predictionChart"></canvas>
+    </div>
+    <script type="text/template" id="predictions-template">
+      <%- JSON.stringify(predictions) %>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const predictionsData = JSON.parse(
+        document.getElementById("predictions-template").textContent
+      );
+      const dates = predictionsData.map((prediction) => prediction.ds);
+      const predictedValues = predictionsData.map((prediction) =>
+        prediction.yhat.toFixed(2)
+      );
+      const lowerBounds = predictionsData.map((prediction) =>
+        prediction.yhat_lower.toFixed(2)
+      );
+      const upperBounds = predictionsData.map((prediction) =>
+        prediction.yhat_upper.toFixed(2)
+      );
+
+      // Creating the chart
+      const ctx = document.getElementById("predictionChart").getContext("2d");
+      const predictionChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              label: "Predicted Value",
+              data: predictedValues,
+              borderColor: "blue",
+              backgroundColor: "rgba(0, 0, 255, 0.1)",
+            },
+            {
+              label: "Lower Bound",
+              data: lowerBounds,
+              borderColor: "green",
+              backgroundColor: "rgba(0, 255, 0, 0.1)",
+            },
+            {
+              label: "Upper Bound",
+              data: upperBounds,
+              borderColor: "red",
+              backgroundColor: "rgba(255, 0, 0, 0.1)",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: "Date",
+              },
+              ticks: {
+                callback: (value) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString();
+                },
+              },
+              // Adjust the tick rotation to fit the date strings
+              tickRotation: 45,
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: "Value",
+              },
+            },
+          },
+        },
+      });
+    </script>
   </body>
 </html>

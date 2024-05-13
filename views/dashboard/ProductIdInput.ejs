@@ -6,13 +6,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
+    <link rel="stylesheet" href="/css/xgboost_input.css" />
   </head>
   <body>
     <h2>Insert Product ID</h2>
-    <form action="/dashboard/productSales" method="POST">
-      <label for="productID">Product ID:</label>
-      <input type="number" id="productID" name="productID" required />
-      <button type="submit">Submit</button>
-    </form>
+    <div class="container">
+      <form
+        class="form-container"
+        action="/dashboard/productSales"
+        method="POST"
+      >
+        <label class="form-label" for="productID">Product ID:</label>
+        <input
+          class="form-input"
+          type="number"
+          id="productID"
+          name="productID"
+          required
+        />
+        <button class="form-button" type="submit">Submit</button>
+      </form>
+    </div>
   </body>
 </html>

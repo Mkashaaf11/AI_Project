@@ -6,6 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XGBoost Predictions</title>
+    <link rel="stylesheet" href="/css/xgboost.css" />
   </head>
   <body>
     <h2>XGBoost Predictions for Product <%= productId %></h2>
@@ -20,10 +21,70 @@
         <% predictions.forEach(prediction => { %>
         <tr>
           <td><%= prediction.week %></td>
-          <td><%= prediction.sales %></td>
+          <td><%= prediction.sales.toFixed(2) %></td>
         </tr>
         <% }); %>
       </tbody>
     </table>
+
+    <!-- Chart.js for graph -->
+    <div class="graph-container">
+      <canvas id="predictionChart"></canvas>
+    </div>
+
+    <!-- Script template tag for predictions data -->
+    <script type="text/template" id="predictions-template">
+      <%- JSON.stringify(predictions) %>
+    </script>
+
+    <!-- Script for Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+      // Parsing predictions data from template
+      const predictionsData = JSON.parse(
+        document.getElementById("predictions-template").textContent
+      );
+
+      // Extracting weeks and sales data
+      const weeks = predictionsData.map((prediction) => prediction.week);
+      const sales = predictionsData.map((prediction) => prediction.sales);
+
+      // Creating the chart
+      const ctx = document.getElementById("predictionChart").getContext("2d");
+      const predictionChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: weeks,
+          datasets: [
+            {
+              label: "Sales",
+              data: sales,
+              borderColor: "blue",
+              backgroundColor: "rgba(0, 0, 255, 0.1)",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: "Week",
+              },
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: "Sales",
+              },
+            },
+          },
+        },
+      });
+    </script>
   </body>
 </html>
